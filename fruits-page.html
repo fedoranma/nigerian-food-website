@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Fruits - HealthyLife</title>
+<link rel="stylesheet" href="food.css">
+</head>
+<body>
+<header class="top-header">
+<div class="logo" style="cursor:pointer;" onclick="location.href='index.html'">← Back Home</div>
+
+<button id="themeBtn">DARK</button>
+</header>
+
+<h1 style="text-align:center; margin-top:20px;">Our Healthy Fruits (30+)</h1>
+
+<div class="search-box" style="text-align:center; padding:15px;">
+<input type="text" id="fruitSearch" placeholder="Search fruit like Mango, Ube, Coconut..." style="padding:10px; width:80%; max-width:400px; border-radius:10px; border:1px solid #ccc;">
+</div>
+
+<div id="fruitsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;"></div>
+
+<script>
+const fruits = [
+  {name:"African Star Apple", tribe:"Agbalumo (Yoruba), Udara (Igbo)", benefit:"High Vitamin C, boosts immunity and digestion", img:"../images/African Star Apple.png"},
+  {name:"African Pear", tribe:"Ube (Igbo), Eben (Edo), Elemi (Yoruba)", benefit:"Rich healthy oil, good for heart and skin", img:"../images/African Pear.jpg"},
+  {name:"Bush Mango", tribe:"Ogbono (Igbo), Oro (Yoruba)", benefit:"Controls weight, lowers cholesterol", img:"../images/Bush Mango.jpg"},
+  {name:"Soursop", tribe:"Tuwon Biri (Hausa), Eko Omode (Yoruba)", benefit:"Anti-cancer, lowers blood sugar", img:"../images/Soursop.jpg"},
+  {name:"Desert Date", tribe:"Aduwa (Hausa)", benefit:"Treats jaundice, rich in iron", img:"../images/Desert Date.jpg"},
+  {name:"Baobab Fruit", tribe:"Kuka (Hausa), Iba (Yoruba)", benefit:"Super Vitamin C, boosts immunity", img:"../images/Baobab fruit.jpg"},
+  {name:"Tiger Nut", tribe:"Aya (Hausa), Ofio (Yoruba), Imumu (Igbo)", benefit:"High fiber, good for digestion", img:"../images/tigernut.jpg"},
+  {name:"Locust Beans Fruit", tribe:"Iru, Dawadawa (Hausa/Yoruba)", benefit:"Rich in protein, good for eyes", img:"../images/locust beans.jpg"},
+  {name:"Icheku", tribe:"Awin (Yoruba), Icheku (Igbo)", benefit:"Good for digestion, high antioxidant", img:"../images/icheku.jpg"},
+  {name:"Miracle Fruit", tribe:"Agbaun (Yoruba)", benefit:"Makes sour taste sweet, good for diabetic", img:"../images/miracle fruit.jpg"},
+  {name:"Hog Plum", tribe:"Iyeye (Yoruba), Isada (Igbo)", benefit:"Rich in iron, builds blood", img:"../images/hog plum.jpg"},
+  {name:"Marula Fruit", tribe:"Marula (All tribes)", benefit:"High Vitamin C, good for skin", img:"../images/marula.jpg"},
+  {name:"Tamarind", tribe:"Tsamiya (Hausa)", benefit:"Controls blood pressure, good for stomach", img:"../images/tamarind.jpg"},
+  {name:"Wild Medlar", tribe:"Iyeye small (Yoruba)", benefit:"Boosts immunity, rich in fiber", img:"../images/wild medlar.jpg"},
+  {name:"Avocado", tribe:"Eko Oyinbo (Yoruba), Ube Bekee (Igbo)", benefit:"Healthy fat, good for heart and brain", img:"../images/avocado.jpg"},
+  {name:"Olive", tribe:"Zaitun (Hausa)", benefit:"Lowers cholesterol, good for heart", img:"../images/olive.webp"},
+  {name:"Coconut", tribe:"Kwakwa (Hausa), Agbon (Yoruba)", benefit:"Hydration, good oil for hair and body", img:"../images/coconut.jpg"},
+  {name:"Monkey Cola", tribe:"Obi Edun (Yoruba), Achicha (Igbo)", benefit:"Boosts energy, rich in calcium", img:"../images/monkey cola.jpg"},
+  {name:"Breadfruit", tribe:"Ukwa (Igbo), Gbere (Yoruba)", benefit:"High fiber, good for digestion", img:"../images/breadfruit.jpg"},
+  {name:"Mango", tribe:"Mangoro (Yoruba), Mangwaro (Hausa)", benefit:"Vitamin A & C, good for eyes and skin", img:"../images/mango.jpg"},
+  {name:"Orange", tribe:"Osan (Yoruba), Lemun Zaki (Hausa)", benefit:"Vitamin C, boosts immunity", img:"../images/orange.jpg"},
+  {name:"Lemon", tribe:"Lemun Tsami (Hausa)", benefit:"Detox, good for cold and skin", img:"../images/lemon.png"},
+  {name:"Lime", tribe:"Rough Lime (Edo)", benefit:"Aids digestion, rich Vitamin C", img:"../images/lime.jpg"},
+  {name:"Cucumber", tribe:"Kokumba (Yoruba)", benefit:"Hydration, good for weight loss", img:"../images/cucumber.jpg"},
+  {name:"Watermelon", tribe:"Kankana (Hausa), Eso Elegede (Yoruba)", benefit:"90% water, hydrates and cools body", img:"../images/watermelon.png"},
+  {name:"Dwarf Banana", tribe:"Ogede Wẹwẹ (Yoruba), Ayaba (Hausa)", benefit:"Energy, rich in potassium", img:"../images/dwarf banana.jpg"},
+  {name:"Pineapple", tribe:"Ede Oyibo (Yoruba), Abarba (Hausa)", benefit:"Aids digestion, anti-inflammatory", img:"../images/pineapple.jpg"},
+  {name:"Guava", tribe:"Goba (Hausa), Gilofa (Yoruba)", benefit:"Vitamin C x4 of orange, good for immunity", img:"../images/guava.png"},
+  {name:"Apple", tribe:"Tuffah (Hausa)", benefit:"Fiber, good for heart and weight loss", img:"../images/apple.png"},
+  {name:"Grapes", tribe:"Inabi (Hausa)", benefit:"Antioxidant, good for heart", img:"../images/grapes.webp"},
+  {name:"Shea Fruit", tribe:"Kade (Hausa), Emi (Yoruba)", benefit:"Vitamin C, good for skin and immunity", img:"../images/shea-butter.jpg"}
+];
+
+
+
+const grid = document.getElementById('fruitsGrid');
+function showFruits(list){
+  grid.innerHTML = "";
+  list.forEach(f => {
+    grid.innerHTML += `
+    <div class="food-card">
+      <img class="food-img-real" src="${f.img}" alt="${f.name}" style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
+      <div class="food-info" style="padding:10px;">
+        <h3>${f.name}</h3>
+        <p><b>Tribe:</b> ${f.tribe}</p>
+        <p><b>Benefit:</b> ${f.benefit}</p>
+
+      </div>
+    </div>`;
+  });
+}
+showFruits(fruits);
+document.getElementById('fruitSearch').addEventListener('input', (e)=>{
+  const v = e.target.value.toLowerCase();
+  showFruits(fruits.filter(f => f.name.toLowerCase().includes(v) || f.tribe.toLowerCase().includes(v)));
+});
+</script>
+<script src="food.js"></script>
+</body>
+</html>

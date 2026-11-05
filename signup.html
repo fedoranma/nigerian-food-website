@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - HealthyLife</title>
+    <link rel="stylesheet" href="food.css">
+</head>
+<body class="center-body">
+    <div class="form-box">
+<h2 data-en="Create Account" data-ig="Mepee Akauntu" data-yo="Ṣẹda Akanti" data-ha="Buɗe Asusu" data-fr="Creer un compte">Create Account</h2>
+<input type="text" id="userName" placeholder="Your Name" autocapitalize="on" autocomplete="on" autocorrect="on" autofocus><br>
+<input type="email" id="userEmail" placeholder="Your Email" autocomplete="email" autocorrect="on" > <br>
+<button id="signupBtn">Sign Up</button><br>
+<div class="lang-row"><br>
+<select name="" id="languageSelect">
+<option value="en">English</option>
+<option value="ig">Igbo</option>
+<option value="yo">Yoruba</option>
+<option value="ha">Hausa</option>
+<option value="fr">French</option>
+</select>
+<br>
+<button id="themeBtn">DARK MODE</button>
+</div>
+</div>
+<script src="food.js"></script>
+
+<script>
+    document.getElementById("signupBtn").addEventListener("click", function () {
+        let name = document.getElementById("userName").value;
+        let email = document.getElementById("userEmail").value;
+        if (name ===""|| email ==="") {
+            alert("Please fill all fields");
+            return;
+        }
+        localStorage.setItem("healthyUser", name);
+        window.location.href = "index.html";
+    } );
+</script>
+
+</body>
+</html>

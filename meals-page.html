@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthy Meals Timetable - HealthyLife</title>
+<link rel="stylesheet" href="food.css">
+<style>
+.tabs{display:flex;justify-content:center;gap:10px;margin:15px 0;flex-wrap:wrap;}
+.tab-btn{
+  padding:12px 22px;border-radius:25px;border:1.5px solid #3a5a2c;
+  background:#fff;color:#3a5a2c;font-weight:bold;cursor:pointer;transition:0.3s;
+}
+.tab-btn.active{background:#3a5a2c;color:#fff;transform:scale(1.05);}
+.combo{
+  background:#f0f7e9;
+  border-left:4px solid #3a5a2c;
+  padding:8px 10px;
+  margin-top:10px;
+  border-radius:8px;
+  font-size:13px;
+}
+.combo span{font-weight:bold;}
+.food-card{transition:0.3s;}
+.food-card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+</style>
+</head>
+<body>
+<header class="top-header">
+<div class="logo" style="cursor:pointer;" onclick="location.href='index.html'">← Back Home</div>
+<button id="themeBtn">DARK</button>
+</header>
+
+<h1 style="text-align:center; margin-top:20px;">Ancient Meals Timetable (30+)</h1>
+<p style="text-align:center; color:#666;">Tap breakfast, lunch or dinner - each meal get perfect drink & fruit wey match</p>
+
+<div class="tabs">
+  <button class="tab-btn active" id="breakfastBtn" onclick="switchMeal('breakfast')">🌅 BREAKFAST (10+)</button>
+  <button class="tab-btn" id="lunchBtn" onclick="switchMeal('lunch')">☀️ LUNCH (10+)</button>
+  <button class="tab-btn" id="dinnerBtn" onclick="switchMeal('dinner')">🌙 DINNER (10+)</button>
+</div>
+
+<div class="search-box" style="text-align:center; padding:15px;">
+<input type="text" id="mealSearch" placeholder="Search meal, drink or fruit like Pap, Zobo, Mango..." style="padding:12px; width:80%; max-width:400px; border-radius:12px; border:1px solid #ccc;">
+</div>
+
+<div id="mealsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap:20px; padding:20px;"></div>
+
+<script>
+const breakfast = [
+  {name:"Pap + Akara", tribe:"Akamu + Kosai (Yoruba/Hausa)", benefit:"Light energy, protein for morning", img:"../images/images 2/pap-akara.jpg", drink:"Kunu Aya (Tiger Nut)", fruit:"Orange", fruitImg:"🍊"},
+  {name:"Moi Moi + Pap", tribe:"Moi Moi (All tribes)", benefit:"High protein, keeps you full", img:"../images/images 2/moi-moi-pap.png", drink:"Soya Milk (Cold)", fruit:"Pineapple", fruitImg:"🍍"},
+  {name:"Yam + Garden Egg Sauce", tribe:"Ji + Anara (Igbo)", benefit:"Fiber, good for digestion", img:"../images/images 2/yam-garden-egg.png", drink:"Coconut Water", fruit:"Garden Egg (Fruit)", fruitImg:"🍈"},
+  {name:"Sweet Potato + Fish", tribe:"Dankali + Kifi (Hausa)", benefit:"Energy, healthy oil", img:"../images/images 2/sweet-potato-fish.png", drink:"Ginger & Lemon Drink", fruit:"Mango", fruitImg:"🥭"},
+  {name:"Fura + Nono", tribe:"Fura da Nono (Fulani)", benefit:"Probiotic, calcium, energy", img:"../images/images 2/fura-nono.png", drink:"Baobab Juice (Kuka)", fruit:"Baobab Fruit", fruitImg:"🌿"},
+  {name:"Ukwa (Breadfruit) Porridge", tribe:"Ukwa (Igbo)", benefit:"High fiber, good for stomach", img:"../images/images 2/ukwa.jpg", drink:"Palm Wine (Fresh)", fruit:"Avocado Pear", fruitImg:"🥑"},
+  {name:"Oat + Tiger Nut Milk", tribe:"Healthy Mix", benefit:"Low sugar, good for heart", img:"../images/images 2/oat-tiger-nut.jpg", drink:"Tiger Nut Drink (Kunu Aya)", fruit:"Banana", fruitImg:"🍌"},
+  {name:"Beans + Plantain", tribe:"Ewa + Dodo (Yoruba)", benefit:"Protein + energy, balanced", img:"../images/images 2/beans-plantain.jpg", drink:"Zobo with Pineapple", fruit:"Pineapple", fruitImg:"🍍"},
+  {name:"Abacha + Ugba", tribe:"African Salad (Igbo)", benefit:"Fiber, protein, light morning", img:"../images/images 2/abacha-ugba.png", drink:"Palm Wine", fruit:"Garden Egg", fruitImg:"🥒"},
+  {name:"Corn + Coconut", tribe:"Agbado + Agbon (Yoruba)", benefit:"Fiber, natural oil", img:"../images/images 2/corn-coconut.jpg", drink:"Coconut Water", fruit:"Coconut", fruitImg:"🥥"}
+];
+
+const lunch = [
+  {name:"Jollof Rice + Moi Moi", tribe:"Jollof (All tribes)", benefit:"Balanced carb + protein", img:"../images/images 2/jollof.png", drink:"Zobo", fruit:"Watermelon", fruitImg:"🍉"},
+  {name:"Semo + Vegetable Soup", tribe:"Semo + Ugu/Ewedu", benefit:"Low carb, iron, builds blood", img:"../images/images 2/semo-veg.jpg", drink:"Soursop Juice", fruit:"Soursop", fruitImg:"🍈"},
+  {name:"Amala + Ewedu + Gbegiri", tribe:"Amala (Yoruba)", benefit:"Fiber, protein, energy", img:"../images/images 2/amala.jpg", drink:"Tamarind Juice (Tsamiya)", fruit:"Tamarind", fruitImg:"🫘"},
+  {name:"Pounded Yam + Oha Soup", tribe:"Oha (Igbo)", benefit:"Energy, rich vitamins", img:"../images/images 2/pounded-yam-oha.jpg", drink:"Palm Fruit Juice", fruit:"Udara (Agbalumo)", fruitImg:"🍒"},
+  {name:"Tuwo Shinkafa + Miyan Kuka", tribe:"Tuwo (Hausa)", benefit:"Light, good for digestion", img:"../images/images 2/tuwo-kuka.jpg", drink:"Baobab Juice", fruit:"Baobab", fruitImg:"🌿"},
+  {name:"Fufu + Egusi Soup", tribe:"Fufu (Igbo)", benefit:"High energy, protein & oil", img:"../images/images 2/fufu-egusi.png", drink:"Pineapple & Ginger", fruit:"Pineapple", fruitImg:"🍍"},
+  {name:"Ofada Rice + Ayamase", tribe:"Ofada (Yoruba)", benefit:"Unpolished rice, high fiber", img:"../images/images 2/ofada.jpg", drink:"Palm Wine", fruit:"Orange", fruitImg:"🍊"},
+  {name:"Yam Pottage (Asaro)", tribe:"Asaro (Yoruba)", benefit:"Good for heart, potassium", img:"../images/images 2/asaro.png", drink:"Orange Juice (Fresh)", fruit:"Orange", fruitImg:"🍊"},
+  {name:"Afang Soup + Fufu", tribe:"Afang (Efik/Ibibio)", benefit:"Super vegetable, iron", img:"../images/images 2/afang.png", drink:"Lemongrass Cold Drink", fruit:"Pawpaw", fruitImg:"🍈"},
+  {name:"Fried Rice + Salad", tribe:"Mixed Veg Rice", benefit:"Vitamins, balanced", img:"../images/images 2/fried-rice.png", drink:"Watermelon Juice", fruit:"Watermelon", fruitImg:"🍉"}
+];
+
+const dinner = [
+  {name:"Pap + Okra Soup", tribe:"Light Dinner", benefit:"Light, easy to digest", img:"../images/images 2/pap-okra.png", drink:"Lemongrass Tea (Warm)", fruit:"Pawpaw", fruitImg:"🍈"},
+  {name:"Unripe Plantain Porridge", tribe:"Ji Akpo (Igbo)", benefit:"Low sugar, good for BP", img:"../images/images 2/unripe-plantain.jpg", drink:"Ginger & Lemon (Warm)", fruit:"Garden Egg", fruitImg:"🥒"},
+  {name:"Oats + Moringa", tribe:"Light Mix", benefit:"Detox, good sleep", img:"../images/images 2/oats-moringa.jpg", drink:"Moringa + Pineapple", fruit:"Pineapple", fruitImg:"🍍"},
+  {name:"Abacha (Evening Main)", tribe:"African Salad (Igbo)", benefit:"Light fiber, not heavy", img:"../images/images 2/abacha.jpg", drink:"Palm Wine (Small)", fruit:"Palm Fruit", fruitImg:"🌴"},
+  {name:"Pepper Soup + Yam", tribe:"Pepper Soup (All)", benefit:"Warms body, good for cold", img:"../images/images 2/pepper-soup-yam.jpg", drink:"Hot Ginger Drink", fruit:"Lemon", fruitImg:"🍋"},
+  {name:"Vegetable Soup + Small Fufu", tribe:"Light Fufu", benefit:"Veg, easy digestion", img:"../images/images 2/semo-veg.jpg", drink:"Cucumber Lemonade", fruit:"Cucumber", fruitImg:"🥒"},
+  {name:"Beans Porridge (Adalu)", tribe:"Adalu (Yoruba)", benefit:"Protein, light if small", img:"../images/images 2/beans-porridge.jpg", drink:"Zobo (No Sugar)", fruit:"Orange", fruitImg:"🍊"},
+  {name:"Corn Pap + Scent Leaf Tea", tribe:"Akamu + Tea", benefit:"Light, good for sleep", img:"../images/images 2/pap-tea.jpg", drink:"Scent Leaf Tea", fruit:"Banana", fruitImg:"🍌"},
+  {name:"Suya + Cucumber + Cabbage", tribe:"Suya (Hausa)", benefit:"Protein + hydration", img:"../images/images 2/suya-cucumber.png", drink:"Cold Lemonade", fruit:"Cucumber", fruitImg:"🥒"},
+  {name:"Fruit Plate + Tiger Nut Milk", tribe:"Fruits Mix", benefit:"Light, vitamins, good sleep", img:"../images/images 2/fruit-plate.webp", drink:"Tiger Nut Milk", fruit:"All Fruits", fruitImg:"🍎"}
+];
+
+
+let currentList = breakfast;
+const grid = document.getElementById('mealsGrid');
+
+function showMeals(list){
+  grid.innerHTML = "";
+  list.forEach(f => {
+    grid.innerHTML += `
+    <div class="food-card">
+      <img class="food-img-real" src="${f.img}" alt="${f.name}" style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
+      <div class="food-info" style="padding:12px;">
+        <h3>${f.name}</h3>
+        <p><b>Origin:</b> ${f.tribe}</p>
+        <p><b>Benefit:</b> ${f.benefit}</p>
+        <div class="combo">
+          <span>🥤 Best Drink:</span> ${f.drink}<br>
+          <span>${f.fruitImg} Best Fruit:</span> ${f.fruit}
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+function switchMeal(type){
+  if(type === 'breakfast'){
+    currentList = breakfast;
+    document.getElementById('breakfastBtn').classList.add('active');
+    document.getElementById('lunchBtn').classList.remove('active');
+    document.getElementById('dinnerBtn').classList.remove('active');
+  } else if(type === 'lunch'){
+    currentList = lunch;
+    document.getElementById('lunchBtn').classList.add('active');
+    document.getElementById('breakfastBtn').classList.remove('active');
+    document.getElementById('dinnerBtn').classList.remove('active');
+  } else {
+    currentList = dinner;
+    document.getElementById('dinnerBtn').classList.add('active');
+    document.getElementById('breakfastBtn').classList.remove('active');
+    document.getElementById('lunchBtn').classList.remove('active');
+  }
+  document.getElementById('mealSearch').value = "";
+  showMeals(currentList);
+}
+
+showMeals(breakfast);
+
+document.getElementById('mealSearch').addEventListener('input', (e)=>{
+  const v = e.target.value.toLowerCase();
+  showMeals(currentList.filter(f => 
+    f.name.toLowerCase().includes(v) || 
+    f.drink.toLowerCase().includes(v) || 
+    f.fruit.toLowerCase().includes(v)
+  ));
+});
+</script>
+<script src="food.js"></script>
+</body>
+</html>

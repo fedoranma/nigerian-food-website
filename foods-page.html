@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20+ Foods-HealthyLife</title>
+    <link rel="stylesheet" href="food.css">
+</head>
+<body>
+    <header class="top-header">
+<div class="logo">HealthyLife</div>
+<div class="logo" style="cursor:pointer;" onclick="location.href='index.html'">← Back Home</div>
+<div class="header-right"><br>
+<select name="" id="languageSelect">
+    <option value="en">English</option>
+    <option value="ig">Igbo</option>
+    <option value="yo">Yoruba</option>
+    <option value="ha">Hausa</option>
+    <option value="fr">French</option>
+</select>
+<br><br>
+<button id="themeBtn">DARK MODE</button>
+
+</div>
+<br>
+</header>
+
+<nav class="main-nav">
+<a href="food.html" class="Home" data-en="Home" data-ig="Ulo" data-yo="Ile" data-ha="Gida" data-fr="Accueil">Home</a>
+
+<a href="foods-page.html" class="active" data-en="Foods" data-ig="Nri" data-yo="Ounje" data-ha="Abinci" data-fr="Aliments">Foods</a>
+
+<a href="#" data-en="About" data-ig="Gbasara" data-yo="Nipa" data-ha="Game da" data-fr="A propos">About</a>
+</nav>
+
+<section class="foods-hero">
+    <h1>20+ Ancient Healthy Foods</h1>
+    <input type="text" id="searchFood" placeholder="Search food...">
+
+</section>
+
+
+
+<div class="foods-container" id="foodsContainer"></div>
+
+<script src="food.js"></script>
+
+<script>
+const foods = [
+{name:"Okpa", english:"Bambara Nut Pudding", tribe:"Igbo", benefit:"Protein, energy, no cholesterol", img:"../images/okpa.jpg"},
+{name:"Ukwa", english:"African Breadfruit", tribe:"Igbo", benefit:"Heart health, rich in iron", img:"../images/Ukwa.jpg"},
+{name:"Abacha", english:"Dried Shredded Cassava", tribe:"Igbo", benefit:"Fibre, vitamin E, light food", img:"../images/Abacha.jpg"},
+{name:"Acha", english:"Fonio - Ancient Grain", tribe:"Hausa", benefit:"Diabetes friendly, gluten free", img:"../images/Acha.jpg"},
+{name:"Bambara Nut", english:"Bambara Groundnut", tribe:"Hausa", benefit:"Complete protein, strong bones", img:"../images/Bambara Nuts.jpg"},
+{name:"Tigernut", english:"Tigernut", tribe:"Hausa", benefit:"Hormone balance, milk alternative", img:"../images/tigernut.jpg"},
+{name:"Baobab Fruit", english:"Baobab Fruit", tribe:"Hausa", benefit:"Vitamin C x10, immunity", img:"../images/Baobab fruit.jpg "},
+{name:"Masa", english:"Fermented Rice Cake", tribe:"Hausa", benefit:"Probiotic, gut health", img:"../images/masa.jpg"},
+{name:"Kunu Aya", english:"Tigernut Milk Drink", tribe:"Hausa", benefit:"Natural energy drink", img:"../images/kunu.jpg"},
+{name:"Fura da Nono", english:"Millet & Milk Balls", tribe:"Fulani", benefit:"Probiotic milk, energy", img:"../images/fura nono.jpg"},
+{name:"Ogi", english:"Fermented Corn Pap", tribe:"Yoruba/Igbo", benefit:"Good for babies, digestion", img:"../images/ogi.jpg"},
+{name:"Adalu", english:"Beans & Corn Pottage", tribe:"Yoruba", benefit:"Complete protein", img:"../images/adalu.jpg"},
+{name:"Ikokore", english:"Water Yam Pottage", tribe:"Yoruba", benefit:"Fibre, low fat", img:"../images/ikokore.jpg"},
+{name:"Tuwo Shinkafa", english:"Soft Rice Swallow", tribe:"Hausa", benefit:"Energy, soft, easy digest", img:"../images/tuwo shinkaa.jpg"},
+{name:"Dan Wake", english:"Beans Dumplings", tribe:"Hausa", benefit:"Protein, fibre", img:"../images/danwake.jpg"},
+{name:"Miyan Kuka", english:"Baobab Leaves Soup", tribe:"Hausa", benefit:"Vitamins, calcium", img:"../images/miyan kuka.jpg"},
+{name:"Ofada Rice", english:"Unpolished Local Rice", tribe:"Yoruba", benefit:"Fibre, iron, not polished", img:"../images/ofada rice.jpg"},
+{name:"Ekpang Nkukwo", english:"Cocoyam & Leaves Pottage", tribe:"Efik", benefit:"Cocoyam, fibre, tasty", img:"../images/ekpang nkukwo.jpg"},
+{name:"Oyo", english:"Fonio Porridge", tribe:"Hausa", benefit:"Ancient grain porridge", img:"../images/oyo.jpg"},
+{name:"Boli", english:"Roasted Plantain + Groundnut", tribe:"All", benefit:"Energy + protein combo", img:"../images/boli.jpg"},
+{name:"Achịcha", english:"Dried cocoyam flakes", tribe:"Igbo (Enugu)", benefit:"High fiber, gives energy and controls blood sugar, good for diabetes", img:"../images/achicha.jpg"},
+{name:"Agbugbu", english:"Pigeon peas", tribe:"Igbo (Enugu)", benefit:"Rich protein, good for building body", img:"../images/agbugbu.jpg", category:"meal"},
+ {name:"Akidi", english:"Black beans", tribe:"Igbo", benefit:"High protein and iron, builds blood", img:"../images/akidi.jpg", category:"meal"},
+{name:"Bitterleaf Soup", english:"Ofe Onugbu", tribe:"Igbo, Edo - Obe Ebiti", benefit:"Cleans stomach, lowers sugar and blood pressure", img:"../images/Bitterleaf-Soup.jpg", category:"soup"},
+{name:"Banga Soup", english:"Ofe Akwu / Amiedi", tribe:"Delta, Igbo, Urhobo", benefit:"Rich palm oil, good for heart and energy", img:"../images/banga.jpg", category:"soup"},
+ {name:"Efor Soup", english:"Efo Riro", tribe:"Yoruba", benefit:"Rich in iron and vitamins, builds blood", img:"../images/efor.jpg", category:"soup"},
+{name:"Egusi Soup", english:"Melon seed soup", tribe:"All tribes - Igbo, Yoruba, Hausa", benefit:"Protein and healthy fat, builds muscle", img:"../images/egusi.webp", category:"soup"},
+ {name:"Oha Soup", english:"Ofe Oha / Ora", tribe:"Igbo", benefit:"Rich in fiber and minerals, good for digestion", img:"../images/oha.png", category:"soup"},
+{name:"Ogbono Soup", english:"African mango seed soup", tribe:"Igbo, Edo, Ibibio", benefit:"Controls weight, good for diabetes", img:"../images/ogbono.jpg", category:"soup"},
+{name:"Okro Soup", english:"Okra soup", tribe:"All tribes", benefit:"High fiber, controls sugar, good for digestion", img:"../images/okro.jpg", category:"soup"},
+{name:"Utazi Soup", english:"Ofe Utazi", tribe:"Igbo (Afikpo)", benefit:"Cleans blood, good for digestion", img:"../images/utazi.jpg", category:"soup"},
+ {name:"White Soup", english:"Ofe Nsala / Afia Efere", tribe:"Igbo, Efik, Ibibio", benefit:"Light soup, good for cold and new mothers", img:"../images/white soup.jpg", category:"soup"},
+];
+
+function openDetail(food) {
+    localStorage.setItem('selectedFoodData',
+        JSON.stringify(food)
+    );
+location.href='food-detail.html';
+}
+
+const container = document.getElementById("foodsContainer");
+const searchInput = document.getElementById("searchFood");
+
+function showFoods(list){
+container.innerHTML="";
+list.forEach((food,i)=>{
+container.innerHTML+=`
+<div class="food-card" onclick='openDetail(${JSON.stringify(food).replace(/'/g,"&#39;")})'
+style= "cursor:pointer;">
+<img src="${food.img}" class="food-img-real" alt="${food.name}" onerror="this.src='https://via.placeholder.com/400x250?text=${food.name}'">
+<h3>${food.name}</h3>
+<p class="english-name"><i>${food.english}</i></p>
+<span class="tribe">${food.tribe}</span>
+<p>${food.benefit}</p>
+<button onclick="goDetails(${i})">View Benefits</button>
+</div>
+`;
+});
+}
+function goDetails(i){
+localStorage.setItem("selectedFood", JSON.stringify(foods[i]));
+localStorage.setItem("selectedType", "food");
+window.location.href="food-details.html";
+}
+showFoods(foods);
+searchInput.addEventListener("input", function(){
+let v=this.value.toLowerCase();
+let f=foods.filter(x=>x.name.toLowerCase().includes(v)||x.english.toLowerCase().includes(v)||x.benefit.toLowerCase().includes(v));
+showFoods(f);
+});
+</script>
+</body>
+</html>

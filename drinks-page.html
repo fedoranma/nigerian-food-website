@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refreshing Natural Drinks - HealthyLife</title>
+<link rel="stylesheet" href="food.css">
+</head>
+<body>
+<header class="top-header">
+<div class="logo" style="cursor:pointer;" onclick="location.href='index.html'">← Back Home</div>
+<button id="themeBtn">DARK</button>
+</header>
+
+<h1 style="text-align:center; margin-top:20px;">Refreshing Natural Drinks (15+)</h1>
+
+<div class="search-box" style="text-align:center; padding:15px;">
+<input type="text" id="drinkSearch" placeholder="Search drink like Zobo, Kunu Aya, Palm Wine..." style="padding:10px; width:80%; max-width:400px; border-radius:10px; border:1px solid #ccc;">
+</div>
+
+<div id="drinksGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;"></div>
+
+<script>
+const drinks = [
+  {name:"Zobo", tribe:"Cold Zobo with Pineapple", benefit:"Lowers BP, rich Vitamin C, refreshing", img:"../images/zobo.jpg"},
+  {name:"Soya Milk Drink", tribe:"Soya Milk (Cold)", benefit:"High protein, good for bones", img:"../images/soya-milk.jpg"},
+  {name:"Kunu Aya", tribe:"Tiger Nut Drink (Very Sweet, Milky)", benefit:"Boosts energy, good for digestion", img:"../images/kunu-aya.jpg"},
+  {name:"Palm Wine", tribe:"Fresh Nkwu Enu / Emu", benefit:"Natural probiotic, rich vitamins", img:"../images/palm-wine.jpg"},
+  {name:"Coconut Water", tribe:"Fresh Coconut Water", benefit:"Natural hydration, rich electrolyte", img:"../images/coconut-water.jpg"},
+  {name:"Palm Fruit Juice", tribe:"Banga Juice / Palm Fruit", benefit:"Rich oil, Vitamin A & E", img:"../images/palm-fruit-juice.jpg"},
+  {name:"Baobab Juice", tribe:"Kuka Juice (Sweet-Sour)", benefit:"Super Vitamin C, immunity booster", img:"../images/baobab-juice.jpg"},
+  {name:"Soursop Juice", tribe:"Sweet Fruit Juice", benefit:"Anti-cancer, good sleep", img:"../images/soursop-juice.jpg"},
+  {name:"Pineapple & Ginger Drink", tribe:"Natural Mix", benefit:"Aids digestion, anti-inflammatory", img:"../images/pineapple-ginger.jpg"},
+  {name:"Watermelon Juice", tribe:"Natural Watermelon", benefit:"Hydrates, cools body 90% water", img:"../images/watermelon-juice.jpg"},
+  {name:"Orange Juice", tribe:"Fresh Orange", benefit:"Vitamin C, boosts immunity", img:"../images/orange-juice.jpg"},
+  {name:"Mango Juice", tribe:"Fresh Mango", benefit:"Vitamin A & C, good for eyes", img:"../images/mango-juice.jpg"},
+  {name:"Tamarind Juice", tribe:"Tsamiya Juice (Hausa)", benefit:"Controls BP, good for stomach", img:"../images/tamarind-juice.jpg"},
+  {name:"Ginger & Lemon Drink", tribe:"Cold, Refreshing", benefit:"Detox, burns fat, cold relief", img:"../images/ginger-lemon.jpg"},
+  {name:"Moringa + Pineapple Drink", tribe:"Sweetened Moringa", benefit:"Super food, high iron & vitamin", img:"../images/moringa-pineapple.jpg"},
+  {name:"Lemongrass Cold Drink", tribe:"Lemongrass Tea (Cold)", benefit:"Calms anxiety, good for fever", img:"../images/lemongrass-drink.jpg"},
+  {name:"Fruit Smoothie", tribe:"Mixed Fruits", benefit:"Energy, fiber, vitamins", img:"../images/fruit-smoothie.jpg"},
+  {name:"Pineapple Juice", tribe:"Fresh Pineapple", benefit:"Aids digestion, sweet natural", img:"../images/pineapple-juice.jpg"},
+  {name:"Cold Lemonade", tribe:"Lemon + Water + Honey", benefit:"Detox, Vitamin C", img:"../images/cold-lemonade.jpg"},
+  {name:"Cucumber Lemonade", tribe:"Cucumber + Lemon", benefit:"Hydration, weight loss, cools body", img:"../images/cucumber-lemonade.jpg"}
+];
+
+const grid = document.getElementById('drinksGrid');
+function showDrinks(list){
+  grid.innerHTML = "";
+  list.forEach(f => {
+    grid.innerHTML += `
+    <div class="food-card">
+      <img class="food-img-real" src="${f.img}" alt="${f.name}" style="width:100%; height:200px; object-fit:cover; border-radius:12px;">
+      <div class="food-info" style="padding:10px;">
+        <h3>${f.name}</h3>
+        <p><b>Type:</b> ${f.tribe}</p>
+        <p><b>Benefit:</b> ${f.benefit}</p>
+      </div>
+    </div>`;
+  });
+}
+showDrinks(drinks);
+document.getElementById('drinkSearch').addEventListener('input', (e)=>{
+  const v = e.target.value.toLowerCase();
+  showDrinks(drinks.filter(f => f.name.toLowerCase().includes(v) || f.tribe.toLowerCase().includes(v)));
+});
+</script>
+<script src="food.js"></script>
+</body>
+</html>
